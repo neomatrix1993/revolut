@@ -11,3 +11,8 @@ Health Check
 ---
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+API Contracts
+---
+
+https://documenter.getpostman.com/view/152056/SVfNvV2o?version=latest
