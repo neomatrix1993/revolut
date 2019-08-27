@@ -1,6 +1,7 @@
 package com.swapnil.revolut.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.swapnil.revolut.exceptions.ConcurrencyException;
 import com.swapnil.revolut.exceptions.InsufficientBalanceException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,11 +46,13 @@ public class Account {
      * Take WriteLock Source()
      * Take WriteLock Destination()
      * <p>
-     * readAndValidateBalance() again
+     * readAndValidateBalance() again because another thread could have taken write lock too.
      * Make the transfer
      * <p>
      * Release WriteLock Destination()
      * Release WriteLock Source()
+     *
+     * PS: We can use timeout as well, or throw exception to client. Use case basis.
      * }
      *
      * @param destAccount Destination account
@@ -82,8 +85,12 @@ public class Account {
                 } finally {
                     this.writeLock.unlock();
                 }
+            } else {
+                throw new ConcurrencyException();
             }
 
+        } else {
+            throw new ConcurrencyException();
         }
     }
 }

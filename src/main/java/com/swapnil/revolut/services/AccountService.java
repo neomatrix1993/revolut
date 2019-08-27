@@ -17,7 +17,7 @@ public class AccountService {
         if (account.getWriteLock().tryLock()) {
             try {
                 accountMap.put(account.getId(), account);
-                account.getReadLock().tryLock();
+                account.getReadLock().lock();
             } finally {
                 account.getWriteLock().unlock();
             }

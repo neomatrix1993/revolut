@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 
 public class AccountTest {
-
     @Test
     public void checkDepositAmountToWorkingFlow() throws InsufficientBalanceException {
         Account sourceAccount = new Account(1L, BigDecimal.TEN);
